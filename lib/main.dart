@@ -21,7 +21,7 @@ void main() async {
             create: (_) => ItemProvider()), // FavoriteProvider
       ],
       child: BlocProvider<FoodCubit>(
-        create: (_) => FoodCubit(),
+        create: (context) => FoodCubit(),
         child: MyApp(), // Main app widget
       ),
     ),

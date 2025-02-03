@@ -40,7 +40,6 @@ class Category {
       time: json['time'], // تصحيح هنا
     );
   }
-
 }
 
 class ItemProvider with ChangeNotifier {
@@ -73,7 +72,7 @@ class ItemProvider with ChangeNotifier {
   Future<void> _saveFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> favoriteList =
-    _favorites.map((category) => jsonEncode(category.toJson())).toList();
+        _favorites.map((category) => jsonEncode(category.toJson())).toList();
     prefs.setStringList('favorites', favoriteList);
   }
 

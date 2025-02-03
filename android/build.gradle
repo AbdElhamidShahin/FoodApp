@@ -4,7 +4,17 @@ allprojects {
         mavenCentral()
     }
 }
-
+buildscript {
+    ext.kotlin_version = '1.9.0' // Ensure this is compatible with your project
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0' // Update this line
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
