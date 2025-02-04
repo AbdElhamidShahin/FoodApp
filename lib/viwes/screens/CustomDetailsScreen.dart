@@ -5,9 +5,9 @@ import '../../model/cubit/item.dart';
 import '../../view_model/commpnas/color.dart';
 
 class CustomDetailsScreen extends StatelessWidget {
-  final Category category;
+  final Item item;
   String text = '';
-  CustomDetailsScreen({super.key, required this.category});
+  CustomDetailsScreen({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CustomDetailsScreen extends StatelessWidget {
             height: 450,
             width: double.infinity,
             child: Image.network(
-              category.imageUrl,
+              item.imageUrl,
               fit: BoxFit.cover,
             ),
           ),
@@ -50,7 +50,7 @@ class CustomDetailsScreen extends StatelessWidget {
                               height: 12,
                             ),
                             Text(
-                              category.name,
+                              item.name,
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 24),
                             ),
@@ -72,7 +72,7 @@ class CustomDetailsScreen extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.network(
-                            category.imageUrl, // Use the passed imageUrl here
+                            item.imageUrl, // Use the passed imageUrl here
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -95,18 +95,7 @@ class CustomDetailsScreen extends StatelessWidget {
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              category.ingredients,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black54,
-                fontSize: 20,
-              ),
-              // Your other widget content
-            ),
-          ),
+
           Container(
             height: 210,
             child: const Padding(

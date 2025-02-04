@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/model/cubit/states.dart';
-import 'package:food_app/viwes/screens/vv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../view_model/commpnas/PushItemCatogry.dart';
+import 'package:food_app/model/cubit/item.dart';
+
 import '../../viwes/screens/Account_Screen.dart';
 import '../../viwes/screens/Card_Screen.dart';
 import '../../viwes/screens/CatogaryScreen.dart';
 import '../../viwes/screens/Favorite_Screen.dart';
 import '../../viwes/screens/Home_Layout.dart';
-import 'item.dart';
-import 'package:food_app/model/cubit/item.dart';
 
 class FoodCubit extends Cubit<FoodState> {
   FoodCubit() : super((TravelInitialState()));
@@ -186,23 +184,25 @@ class FoodCubit extends Cubit<FoodState> {
 
       final response = await Supabase.instance.client
           .from(tableName)
-          .select('name, price, image_url,ingredients,time,number');
+          .select('name, price, image_url');
 
       if (response == null || response.isEmpty) {
+        print("No data found for table $tableName");
         emit(CategoryError('No data found for table "$tableName".'));
         return;
       }
 
-      final List<Category> categories = (response  as List)
-          .map((item) => Category(
-                name: item['name'] ?? 'No Name',
-                price: item['price'] ?? 'No price',
-                imageUrl: item['image_url'] ?? '',
-                ingredients: item['ingredients'] ?? '',
-                time: item['time'] ?? '',
-                number: item['number'] ?? '',
-              ))
-          .toList();
+      final List<Item> items = (response as List).map((item) {
+        return Item(
+          name: item['name'] ?? 'No Name',
+          price: item['price'] ?? 'No price',
+          imageUrl: item['image_url'] ?? '',
+          time: item['time'] ?? '',
+          number: item['number'] ?? '',
+        );
+      }).toList();
+
+      emit(CategoryLoaded(items));
     } catch (e) {
       emit(CategoryError(e.toString()));
     }

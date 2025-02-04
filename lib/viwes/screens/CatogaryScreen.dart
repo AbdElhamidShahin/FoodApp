@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/annotations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/model/cubit/bloc.dart';
-import 'package:food_app/model/cubit/item.dart'; // Import your custom Category class
 import 'package:food_app/model/cubit/states.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/vv.dart';
@@ -10,7 +9,8 @@ import 'package:food_app/viwes/screens/vv.dart';
 class Catogaryscreen extends StatelessWidget {
   final int? ItemCount;
   final String tableName;
-final Category? category;
+  final Category? category;
+
   const Catogaryscreen({
     Key? key,
     this.ItemCount,
@@ -42,7 +42,7 @@ final Category? category;
                         child: BlocBuilder<FoodCubit, FoodState>(
                           builder: (context, state) {
                             if (state is CategoryLoaded) {
-                              final itemCount = state.categories.length;
+                              final itemCount = state.Items.length;
                               return Text(
                                 '$itemCount',
                                 style: const TextStyle(
@@ -83,27 +83,17 @@ final Category? category;
                 if (state is CategoryLoadingState) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CategoryLoaded) {
-                  final categories = state.categories;
+                  final Items = state.Items;
 
                   return ListView.builder(
-                    itemCount: categories.length,
+                    itemCount: Items.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => CustomDetailsScreen(
-                          //       category: categories[index],
-                          //     ),
-                          //   ),
-                          // );
-                        },
+                        onTap: () {},
                         child: CustomItemCategory(
                           screenWidth: MediaQuery.of(context).size.width,
-                          name: categories[index].name,
-                          description: categories[index].price.toString(), // Convert to String
-                          imageUrl: categories[index].imageUrl,
+                          name: Items[index].name,
+                          imageUrl: Items[index].imageUrl,
                         ),
                       );
                     },
@@ -123,4 +113,3 @@ final Category? category;
     );
   }
 }
-

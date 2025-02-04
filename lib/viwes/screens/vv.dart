@@ -8,16 +8,14 @@ class CustomItemCategory extends StatelessWidget {
     this.screenWidth,
     required this.imageUrl,
     required this.name,
-    required this.description,
-    this.category,
+    this.item,
     this.screenHeight,
   });
 
-  final Category? category;
+  final Item? item;
   final double? screenWidth;
   final double? screenHeight;
   final String name;
-  final String description;
   final String imageUrl;
 
   @override
@@ -54,19 +52,13 @@ class CustomItemCategory extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          Text(
-                            description,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: screenWidth! * 0.05,
-                            ),
-                          ),
                           const SizedBox(height: 8),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(top: 8, bottom: 16),
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 16),
                               ),
                               Center(
                                 child: Text(

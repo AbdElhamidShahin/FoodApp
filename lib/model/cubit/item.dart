@@ -2,69 +2,76 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
-class Category {
+class Item {
   final String name;
   final String price;
   final String imageUrl;
   final String? number;
-  final String ingredients;
   final String? time;
 
-  Category({
+  Item({
     required this.number,
     required this.name,
     required this.price,
     required this.imageUrl,
-    required this.ingredients,
     required this.time,
   });
 
   Map<String, dynamic> toJson() {
     return {
       'time': time,
-      'ingredients': ingredients,
       'name': name,
-      'description': price,
+      'price': price, // Changed from 'description' to 'price'
       'imageUrl': imageUrl,
       'number': number,
     };
   }
 
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
       name: json['name'],
       imageUrl: json['imageUrl'],
       number: json['number'],
-      price: json['price'], // تصحيح هنا
-      ingredients: json['ingredients'], // تصحيح هنا
-      time: json['time'], // تصحيح هنا
+      price: json['price'],
+      time: json['time'],
     );
   }
+
+  // Override equality to help with .contains
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Item &&
+              runtimeType == other.runtimeType &&
+              number == other.number; // use a unique identifier
+
+  @override
+  int get hashCode => number.hashCode;
 }
 
 class ItemProvider with ChangeNotifier {
-  List<Category> _favorites = [];
+  List<Item> _favorites = []; // Corrected type
 
-  List<Category> get favorites => _favorites;
+  List<Item> get favorites => _favorites;
 
   ItemProvider() {
     _loadFavorites();
   }
 
-  bool isFavorite(Category category) {
-    return _favorites.contains(category);
+  bool isFavorite(Item item) {
+    return _favorites.contains(item);
   }
 
-  void addToFavorites(Category category) async {
-    if (!_favorites.contains(category)) {
-      _favorites.add(category);
+  void addToFavorites(Item item) async {
+    if (!_favorites.contains(item)) {
+      _favorites.add(item);
       await _saveFavorites();
       notifyListeners();
     }
   }
 
-  void removeFromFavorites(Category category) async {
-    _favorites.remove(category);
+  void removeFromFavorites(Item item) async {
+    _favorites.remove(item);
     await _saveFavorites();
     notifyListeners();
   }
@@ -72,7 +79,7 @@ class ItemProvider with ChangeNotifier {
   Future<void> _saveFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> favoriteList =
-        _favorites.map((category) => jsonEncode(category.toJson())).toList();
+    _favorites.map((item) => jsonEncode(item.toJson())).toList();
     prefs.setStringList('favorites', favoriteList);
   }
 
@@ -81,9 +88,9 @@ class ItemProvider with ChangeNotifier {
     final List<String>? favoriteList = prefs.getStringList('favorites');
 
     if (favoriteList != null) {
-      _favorites = favoriteList
-          .map((item) => Category.fromJson(jsonDecode(item)))
-          .toList();
+      _favorites =
+          favoriteList.map((item) => Item.fromJson(jsonDecode(item))).toList();
+      notifyListeners();
     }
   }
 }
