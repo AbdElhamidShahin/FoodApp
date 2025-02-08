@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "253004647318",
+    "project_id": "toursm-app",
+    "storage_bucket": "toursm-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253004647318:android:6ca8ee37e26535a468ebb7",
+        "android_client_info": {
+          "package_name": "com.example.asas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFZK6eTIzKUPxhKgpSg4GLyl0McbHX_bQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
