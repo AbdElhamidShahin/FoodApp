@@ -1,137 +1,199 @@
-
 import 'package:flutter/material.dart';
+import 'package:food_app/view_model/commpnas/color.dart';
+import 'package:food_app/viwes/screens/Favorite_Screen.dart';
 
 import '../../model/cubit/item.dart';
-import '../../view_model/commpnas/color.dart';
 
 class CustomDetailsScreen extends StatelessWidget {
   final Item item;
-  String text = '';
+
   CustomDetailsScreen({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          Container(
-            height: 450,
-            width: double.infinity,
-            child: Image.network(
-              item.imageUrl,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.only(right: 10, left: 10, top: 0),
-            child: Container(
-              height: 120,
-              constraints: const BoxConstraints(
-                minHeight: 120,
+      backgroundColor: const Color.fromRGBO(42, 45, 52, 1),
+      body: Stack(
+        children: [
+          // الصورة العلوية
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 460,
+            child: ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(16)),
+              child: Image.network(
+                item.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    'assets/imagesFood/download.png',
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(28),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 12.0),
-                      child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Text(
-                              item.name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 1/5 for Image (using FractionallySizedBox to scale image)
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FractionallySizedBox(
-                        alignment: Alignment.center,
-                        heightFactor: 0.99,
-                        widthFactor:
-                            1.2, // Ensures the image takes the full height
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            item.imageUrl, // Use the passed imageUrl here
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 1/5 Empty Space (Adjustable if needed)
-                ],
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              top: 20,
-            ),
-            child: Text(
-              "الوصف",
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
           ),
 
-          Container(
-            height: 210,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+          // محتوى الوصف وزر "ابدأ الطهي"
+          Positioned(
+            bottom: 0,
+            top: 250,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: colorBasic,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'تابعونا علي ',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      const Text(
+                        "Ingredients",
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        item.name,
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // زر "ابدأ الطهي"
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF2F2D2F),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  FavoriteScreen(), // الصفحة الفعلية
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var scaleAnimation = Tween<double>(
+                              begin: 0.5,
+                              end: 1.0,
+                            ).animate(CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            ));
+                            var fadeAnimation = Tween<double>(
+                              begin: 0.0,
+                              end: 1.0,
+                            ).animate(CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeInOut,
+                            ));
+                            return ScaleTransition(
+                              scale: scaleAnimation,
+                              child: FadeTransition(
+                                opacity: fadeAnimation,
+                                child: child,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: const Center(
+                      child: Text(
+                        "Start Cooking",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 18),
+
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
           ),
-          Center(
-            child: Container(
-              width: 160,
-              height: 60,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(32), color: colorA),
-              child: const Center(
-                  child: Text(
-                'تقييم',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24),
-              )),
+
+          // زر الرجوع وزر المفضلة
+          Align(
+            alignment: Alignment.topRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_forward_ios_sharp,
+                      color: colorB,
+                      size: 32,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 80,
+                ),
+                _buildFavoriteIcon(context),
+              ],
             ),
           ),
-        ]),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFavoriteIcon(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: colorBasic,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 4,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: IconButton(
+            onPressed: () {
+              // هنا يمكنك إضافة منطق تغيير حالة المفضلة
+              print("تم النقر على زر المفضلة");
+            },
+            icon: Icon(
+              Icons
+                  .favorite_border_outlined, // يمكنك استبداله بـ Icons.favorite إذا كان مفضلاً
+              size: 30,
+              color: colorA,
+            ),
+          ),
+        ),
       ),
     );
   }

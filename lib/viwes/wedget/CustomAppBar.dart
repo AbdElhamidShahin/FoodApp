@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../view_model/commpnas/color.dart';
 
 class Customappbar extends StatelessWidget {
-  const Customappbar({super.key});
-
+  const Customappbar({super.key, required this.text});
+  final String text;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
               Image(
@@ -21,29 +21,36 @@ class Customappbar extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "Happy Meal",
+                text,
                 style: TextStyle(
                     color: colorB, fontSize: 24, fontWeight: FontWeight.bold),
               ),
               Spacer(),
-              Icon(
-                Icons.arrow_forward_ios_sharp,
-                size: 28,
-                color: colorB,
-              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  size: 28,
+                  color: colorB,
+                ),
+              )
             ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 16),
+          padding: const EdgeInsets.symmetric(
+            vertical: 2,
+          ),
           child: Container(
-            height: 50,
+            height: 45,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: colorBasic, borderRadius: BorderRadius.circular(12)),
             child: Row(
               mainAxisAlignment:
-              MainAxisAlignment.end, // وضع الأيقونة في أقصى اليسار
+                  MainAxisAlignment.end, // وضع الأيقونة في أقصى اليسار
 
               children: [
                 Padding(

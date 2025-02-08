@@ -13,18 +13,14 @@ class Pushitemcatogry extends StatelessWidget {
       listener: (BuildContext context, state) {},
       builder: (BuildContext context, state) {
         var cubit = FoodCubit.get(context);
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: cubit.items.map((item) {
-                  return Customcatogryitem(item: item);
-                }).toList(),
-              ),
-            ),
-          ],
+        var itemCount = cubit.items.take(4).toList(); //هستدعس 4 عناصر فقط
+
+        return Row(
+          children: itemCount.map((item) {
+            return Expanded(
+              child: Customcatogryitem(item: item),
+            );
+          }).toList(),
         );
       },
     );

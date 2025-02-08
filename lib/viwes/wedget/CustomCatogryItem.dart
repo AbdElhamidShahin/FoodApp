@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../view_model/commpnas/color.dart';
-
 class Customcatogryitem extends StatelessWidget {
   final Map<String, dynamic> item;
 
@@ -10,31 +9,31 @@ class Customcatogryitem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: item['onTap'] != null ? () => item['onTap'](context) : null,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: colorBasic,
-              ),
-              child: FittedBox(
-                fit: BoxFit.contain, // التحكم في كيفية ملاءمة الصورة
-                child: Image(
-                  image: AssetImage(item['urlImage']),
-                ),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: colorBasic, // تأكد من تعريف هذا المتغير في ملف الألوان
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image(
+                width: 45,
+                height: 45,
+                image: AssetImage(item['urlImage']),
               ),
             ),
-            Text(
-              item['name']!,
-              style: TextStyle(
-                  color: colorA, fontWeight: FontWeight.bold, fontSize: 22),
-            )
-          ],
-        ),
+          ),
+          Text(
+            item['name']!,
+            style: TextStyle(
+              color: colorA, // تأكد من تعريف هذا المتغير في ملف الألوان
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          )
+        ],
       ),
     );
   }

@@ -8,6 +8,7 @@ class Item {
   final String imageUrl;
   final String? number;
   final String? time;
+  final String? ingredients;
 
   Item({
     required this.number,
@@ -15,10 +16,13 @@ class Item {
     required this.price,
     required this.imageUrl,
     required this.time,
+    required this.ingredients,
   });
 
   Map<String, dynamic> toJson() {
     return {
+      'ingredients': ingredients,
+
       'time': time,
       'name': name,
       'price': price, // Changed from 'description' to 'price'
@@ -29,6 +33,7 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
+      ingredients: json['ingredients'],
       name: json['name'],
       imageUrl: json['imageUrl'],
       number: json['number'],
@@ -41,9 +46,9 @@ class Item {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Item &&
-              runtimeType == other.runtimeType &&
-              number == other.number; // use a unique identifier
+      other is Item &&
+          runtimeType == other.runtimeType &&
+          number == other.number; // use a unique identifier
 
   @override
   int get hashCode => number.hashCode;
@@ -79,7 +84,7 @@ class ItemProvider with ChangeNotifier {
   Future<void> _saveFavorites() async {
     final prefs = await SharedPreferences.getInstance();
     final List<String> favoriteList =
-    _favorites.map((item) => jsonEncode(item.toJson())).toList();
+        _favorites.map((item) => jsonEncode(item.toJson())).toList();
     prefs.setStringList('favorites', favoriteList);
   }
 

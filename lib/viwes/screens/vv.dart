@@ -1,96 +1,121 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/model/cubit/item.dart'; // Import your custom Category class
+import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
+import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
 
 class CustomItemCategory extends StatelessWidget {
   const CustomItemCategory({
     super.key,
-    this.screenWidth,
     required this.imageUrl,
     required this.name,
+    required this.price,
     this.item,
-    this.screenHeight,
+    required this.number,
+    required this.time, required this.ingredients,
   });
 
-  final Item? item;
-  final double? screenWidth;
-  final double? screenHeight;
   final String name;
   final String imageUrl;
+  final String price;
+  final String number;
+  final String time;
+  final String ingredients;
+
+  final Item? item;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28),
-              color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => CustomDetailsScreen(
+              item: Item(
+                ingredients:ingredients,
+                number: number,
+                name: name,
+                price: price,
+                imageUrl: imageUrl,
+                time: time,
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          SizedBox(
+            height: 80,
+          ),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                height: 180,
+                width: 180,
+                decoration: BoxDecoration(
+                  color: colorBasic,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 5,
+                      spreadRadius: 2,
+                      color: Colors.grey.withOpacity(0.3),
+                      offset: const Offset(2, 2),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 80, left: 8, right: 8, bottom: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(height: 12),
                           Text(
-                            name,
-                            style: TextStyle(
+                            price,
+                            style: const TextStyle(
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              fontSize: screenWidth! * 0.06,
+                              color: Colors.black,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          const SizedBox(height: 8),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 8, bottom: 16),
-                              ),
-                              Center(
-                                child: Text(
-                                  '  5.0',
-                                  style: TextStyle(
-                                    color: colorA,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          IconButton(
+                            icon: const Icon(Icons.favorite_border,
+                                size: 28, color: Colors.red),
+                            onPressed: () {},
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.network(
-                      imageUrl,
-                      fit: BoxFit.cover,
-                      height: 100,
-                      width: 50,
-                    ),
-                  ),
+              ),
+              Positioned(
+                top: -70,
+                left: 20,
+                height: 140,
+                width: 140,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.grey[300],
+                  backgroundImage: NetworkImage(imageUrl),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

@@ -1,82 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/annotations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/model/cubit/bloc.dart';
 import 'package:food_app/model/cubit/states.dart';
-import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/vv.dart';
+import 'package:food_app/viwes/wedget/CustomAppBar.dart';
+import '../../model/cubit/item.dart';
 
 class Catogaryscreen extends StatelessWidget {
   final int? ItemCount;
-  final String tableName;
-  final Category? category;
-
+  final String text;
   const Catogaryscreen({
     Key? key,
     this.ItemCount,
-    required this.tableName,
-    this.category,
+    required this.text,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(100.0), // تحديد الارتفاع
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Customappbar(
+            text: text,
+          ),
+        ),
+      ),
       body: Column(
         children: [
-          Container(
-            height: 50,
-            decoration: BoxDecoration(color: colorA),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30.0),
-                    child: Container(
-                      height: 40,
-                      width: screenWidth * 0.15,
-                      decoration: const BoxDecoration(color: Colors.black12),
-                      child: Center(
-                        child: BlocBuilder<FoodCubit, FoodState>(
-                          builder: (context, state) {
-                            if (state is CategoryLoaded) {
-                              final itemCount = state.Items.length;
-                              return Text(
-                                '$itemCount',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            } else {
-                              return const CircularProgressIndicator(
-                                color: Colors.white,
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text(
-                    "صيداليات",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.06,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: BlocBuilder<FoodCubit, FoodState>(
               builder: (context, state) {
@@ -85,15 +37,24 @@ class Catogaryscreen extends StatelessWidget {
                 } else if (state is CategoryLoaded) {
                   final Items = state.Items;
 
-                  return ListView.builder(
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: .7,
+                    ),
                     itemCount: Items.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {},
                         child: CustomItemCategory(
-                          screenWidth: MediaQuery.of(context).size.width,
+                          ingredients: Items[index].name,
+
                           name: Items[index].name,
                           imageUrl: Items[index].imageUrl,
+                          price: Items[index].price,
+                          number: Items[index].price,
+                          time: Items[index].price,
                         ),
                       );
                     },

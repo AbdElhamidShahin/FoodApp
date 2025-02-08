@@ -15,18 +15,25 @@ class FoodCubit extends Cubit<FoodState> {
 
   static FoodCubit get(context) => BlocProvider.of<FoodCubit>(context);
 
-  int currentIndex = 0;
+  int currentIndex = 2; // افتراضيًا على الصفحة الرئيسية
+  Widget currentScreen = HomeLayout(); // الشاشة الافتراضية
 
-  List<Widget> screens = [
-    AccountScreen(),
+  List<Widget> bottomScreens = [
+    FavoriteScreen(),
     CardScreen(),
     HomeLayout(),
-    FavoriteScreen(),
+    AccountScreen(),
   ];
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
-    if (index == 0) {}
+    currentScreen = bottomScreens[index];
+    emit(TravelBottomnavBarState());
+  }
+
+  // تنقل إلى أي صفحة جديدة مع الإبقاء على الـ BottomNavigationBar
+  void navigateToScreen(Widget screen) {
+    currentScreen = screen;
     emit(TravelBottomnavBarState());
   }
 
@@ -41,62 +48,7 @@ class FoodCubit extends Cubit<FoodState> {
             builder: (context) => BlocProvider(
               create: (_) => FoodCubit()..fetchCategoryData('test'),
               child: Catogaryscreen(
-                tableName: 'test',
-              ), // Make sure to provide a child widget
-              // اسم الجدول
-            ),
-          ),
-        );
-      },
-    },
-    {
-      'urlImage': 'assets/imageCatogry/sandwich.png',
-      'name': 'السندويتشات ',
-      'onTap': (BuildContext context) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider(
-              create: (_) => FoodCubit()..fetchCategoryData('test'),
-              child: Catogaryscreen(
-                tableName: 'test',
-              ), // Make sure to provide a child widget
-
-              // اسم الجدول
-            ),
-          ),
-        );
-      },
-    },
-    {
-      'urlImage': 'assets/imageCatogry/pizza.png',
-      'name': 'البيتزا ',
-      'onTap': (BuildContext context) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider(
-              create: (_) => FoodCubit()..fetchCategoryData('test'),
-              child: Catogaryscreen(
-                tableName: 'test',
-              ), // Make sure to provide a child widget
-// اسم الجدول
-            ),
-          ),
-        );
-      },
-    },
-    {
-      'urlImage': 'assets/imageCatogry/burger.png',
-      'name': 'البرجر ',
-      'onTap': (BuildContext context) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider(
-              create: (_) => FoodCubit()..fetchCategoryData('test'),
-              child: Catogaryscreen(
-                tableName: 'test',
+                text: 'الوجبات',
               ), // Make sure to provide a child widget
               // اسم الجدول
             ),
@@ -114,9 +66,45 @@ class FoodCubit extends Cubit<FoodState> {
             builder: (context) => BlocProvider(
               create: (_) => FoodCubit()..fetchCategoryData('test'),
               child: Catogaryscreen(
-                tableName: 'test',
+                text: 'السلطات',
               ), // Make sure to provide a child widget
 // اسم الجدول
+            ),
+          ),
+        );
+      },
+    },
+    {
+      'urlImage': 'assets/imageCatogry/pizza.png',
+      'name': 'البيتزا ',
+      'onTap': (BuildContext context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (_) => FoodCubit()..fetchCategoryData('test'),
+              child: Catogaryscreen(
+                text: 'البيتزا',
+              ), // Make sure to provide a child widget
+// اسم الجدول
+            ),
+          ),
+        );
+      },
+    },
+    {
+      'urlImage': 'assets/imageCatogry/burger.png',
+      'name': 'البرجر ',
+      'onTap': (BuildContext context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (_) => FoodCubit()..fetchCategoryData('test'),
+              child: Catogaryscreen(
+                text: 'البرجر',
+              ), // Make sure to provide a child widget
+              // اسم الجدول
             ),
           ),
         );
@@ -132,8 +120,27 @@ class FoodCubit extends Cubit<FoodState> {
             builder: (context) => BlocProvider(
               create: (_) => FoodCubit()..fetchCategoryData('test'),
               child: Catogaryscreen(
-                tableName: 'test',
+                text: 'الحلويات',
               ), // Make sure to provide a child widget
+              // اسم الجدول
+            ),
+          ),
+        );
+      },
+    },
+    {
+      'urlImage': 'assets/imageCatogry/sandwich.png',
+      'name': 'السندويتشات ',
+      'onTap': (BuildContext context) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (_) => FoodCubit()..fetchCategoryData('test'),
+              child: Catogaryscreen(
+                text: 'السندويتشات',
+              ), // Make sure to provide a child widget
+
               // اسم الجدول
             ),
           ),
@@ -150,7 +157,7 @@ class FoodCubit extends Cubit<FoodState> {
             builder: (context) => BlocProvider(
               create: (_) => FoodCubit()..fetchCategoryData('test'),
               child: Catogaryscreen(
-                tableName: 'test',
+                text: 'مشروبات بارده',
               ), // Make sure to provide a child widget
               // اسم الجدول
             ),
@@ -168,10 +175,8 @@ class FoodCubit extends Cubit<FoodState> {
             builder: (context) => BlocProvider(
               create: (_) => FoodCubit()..fetchCategoryData('test'),
               child: Catogaryscreen(
-                tableName: 'test',
-              ), // Make sure to provide a child widget
-              // اسم الجدول
-              // child: const MedicalScreen(tableName: 'test'), // اسم الجدول
+                text: 'مشروبات ساخنه',
+              ),
             ),
           ),
         );
@@ -194,6 +199,7 @@ class FoodCubit extends Cubit<FoodState> {
 
       final List<Item> items = (response as List).map((item) {
         return Item(
+          ingredients: item['ingredients'] ?? 'No Name',
           name: item['name'] ?? 'No Name',
           price: item['price'] ?? 'No price',
           imageUrl: item['image_url'] ?? '',

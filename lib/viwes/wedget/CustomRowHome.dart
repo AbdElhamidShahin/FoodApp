@@ -8,7 +8,7 @@ final String text;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric( vertical: 11),
       child: Row(
         children: [
           Container(
