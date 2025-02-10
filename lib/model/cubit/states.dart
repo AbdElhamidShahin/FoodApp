@@ -1,5 +1,4 @@
 
-import 'package:flutter/foundation.dart';
 import 'package:food_app/model/cubit/item.dart';
 
 abstract class FoodState {
@@ -11,6 +10,12 @@ class TravelInitialState extends FoodState {}
 class TravelBottomnavBarState extends FoodState {}
 
 class CategoryLoadingState extends FoodState {}
+class CategorySuccess extends FoodState {
+  final List<Item> Items;
+
+  CategorySuccess({required this.Items});
+
+}
 
 
 class CategoryLoaded extends FoodState {

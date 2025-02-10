@@ -9,10 +9,12 @@ import '../../model/cubit/item.dart';
 class Catogaryscreen extends StatelessWidget {
   final int? ItemCount;
   final String text;
+  final Item? item;
   const Catogaryscreen({
     Key? key,
     this.ItemCount,
     required this.text,
+    this.item,
   }) : super(key: key);
 
   @override
@@ -47,15 +49,8 @@ class Catogaryscreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {},
-                        child: CustomItemCategory(
-                          ingredients: Items[index].name,
+                        child: CustomItemCategory(item: Items[index]),
 
-                          name: Items[index].name,
-                          imageUrl: Items[index].imageUrl,
-                          price: Items[index].price,
-                          number: Items[index].price,
-                          time: Items[index].price,
-                        ),
                       );
                     },
                   );

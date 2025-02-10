@@ -1,198 +1,256 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
-import 'package:food_app/viwes/screens/Favorite_Screen.dart';
-
+import 'package:food_app/viwes/screens/Card_Screen.dart';
 import '../../model/cubit/item.dart';
+import '../../view_model/commpnas/helper/buildNumber.dart';
+import '../wedget/buildFavoriteIcon.dart';
 
-class CustomDetailsScreen extends StatelessWidget {
+class CustomDetailsScreen extends StatefulWidget {
   final Item item;
 
   CustomDetailsScreen({super.key, required this.item});
 
   @override
+  State<CustomDetailsScreen> createState() => _CustomDetailsScreenState();
+}
+
+class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(42, 45, 52, 1),
-      body: Stack(
-        children: [
-          // الصورة العلوية
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 460,
-            child: ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(bottom: Radius.circular(16)),
-              child: Image.network(
-                item.imageUrl,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    'assets/imagesFood/download.png',
-                    fit: BoxFit.cover,
-                  );
-                },
+    return Expanded(
+      child: Scaffold(
+        backgroundColor: const Color.fromRGBO(42, 45, 52, 1),
+        body: Stack(
+          children: [
+            // الصورة العلوية
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 460,
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(16)),
+                child: Image.network(
+                  widget.item.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      'assets/imagesFood/download.png',
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-
-          // محتوى الوصف وزر "ابدأ الطهي"
-          Positioned(
-            bottom: 0,
-            top: 250,
-            left: 0,
-            right: 0,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: colorBasic,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Text(
-                        "Ingredients",
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                        ),
+            Positioned(
+              bottom: 0,
+              top: 250,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: colorBasic,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            "${(double.parse(widget.item.price)).toStringAsFixed(0)}EGP",
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: colorA,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Spacer(),
+                          Text(
+                            widget.item.name,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              color: colorA,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                      Spacer(),
-                      Text(
-                        item.name,
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  // زر "ابدأ الطهي"
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF2F2D2F),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  FavoriteScreen(), // الصفحة الفعلية
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var scaleAnimation = Tween<double>(
-                              begin: 0.5,
-                              end: 1.0,
-                            ).animate(CurvedAnimation(
-                              parent: animation,
-                              curve: Curves.easeInOut,
-                            ));
-                            var fadeAnimation = Tween<double>(
-                              begin: 0.0,
-                              end: 1.0,
-                            ).animate(CurvedAnimation(
-                              parent: animation,
-                              curve: Curves.easeInOut,
-                            ));
-                            return ScaleTransition(
-                              scale: scaleAnimation,
-                              child: FadeTransition(
-                                opacity: fadeAnimation,
-                                child: child,
+                    Text(
+                      "المكونات",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "مده الطهي:${widget.item.time}دقيقه",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "${widget.item.number}",
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade700,
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                buildButton("-", () {
+                                  if (count > 1) {
+                                    setState(() {
+                                      count--;
+                                    });
+                                  }
+                                }),
+                                buildNumber(count),
+                                buildButton("+", () {
+                                  setState(() {
+                                    count++;
+                                  });
+                                }),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 50,
+                          ),
+                          Text(
+                            "الكميه",
+                            style: const TextStyle(
+                              fontSize: 28,
+                              color: colorA,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Text(
+                      "الاضافات",
+                      style: const TextStyle(
+                        fontSize: 28,
+                        color: colorA,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(24)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 12),
+                            child: Text(
+                              "${(double.parse(widget.item.price) * count).toStringAsFixed(0)}EGP",
+                              style: const TextStyle(
+                                fontSize: 22,
+                                color: colorB,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
-                      );
-                    },
-                    child: const Center(
-                      child: Text(
-                        "Start Cooking",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Text(
+                          "المجموع",
+                          style: const TextStyle(
+                            fontSize: 28,
+                            color: colorA,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: colorB,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CardScreen(),
+                          ),
+                        );
+                      },
+                      child: const Center(
+                        child: Text(
+                          "اضافه الي السله",
+                          style: TextStyle(
+                            color: colorA,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            ),
 
-                  const SizedBox(height: 30),
+            Align(
+              alignment: Alignment.topRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios_sharp,
+                        color: colorB,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 80,
+                  ),
+                  BuildFavoriteIcon(
+                    item: widget.item,
+                  ),
                 ],
               ),
             ),
-          ),
-
-          // زر الرجوع وزر المفضلة
-          Align(
-            alignment: Alignment.topRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_forward_ios_sharp,
-                      color: colorB,
-                      size: 32,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 80,
-                ),
-                _buildFavoriteIcon(context),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFavoriteIcon(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
-        child: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: colorBasic,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 4,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: IconButton(
-            onPressed: () {
-              // هنا يمكنك إضافة منطق تغيير حالة المفضلة
-              print("تم النقر على زر المفضلة");
-            },
-            icon: Icon(
-              Icons
-                  .favorite_border_outlined, // يمكنك استبداله بـ Icons.favorite إذا كان مفضلاً
-              size: 30,
-              color: colorA,
-            ),
-          ),
+          ],
         ),
       ),
     );

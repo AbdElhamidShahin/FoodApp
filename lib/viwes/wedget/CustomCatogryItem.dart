@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../view_model/commpnas/color.dart';
+
 class Customcatogryitem extends StatelessWidget {
   final Map<String, dynamic> item;
 
@@ -14,7 +15,7 @@ class Customcatogryitem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: colorBasic, // تأكد من تعريف هذا المتغير في ملف الألوان
+              color: colorBasic,
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -28,7 +29,7 @@ class Customcatogryitem extends StatelessWidget {
           Text(
             item['name']!,
             style: TextStyle(
-              color: colorA, // تأكد من تعريف هذا المتغير في ملف الألوان
+              color: colorA,
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),

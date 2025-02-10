@@ -15,11 +15,12 @@ class FoodCubit extends Cubit<FoodState> {
 
   static FoodCubit get(context) => BlocProvider.of<FoodCubit>(context);
 
+
   int currentIndex = 2; // افتراضيًا على الصفحة الرئيسية
   Widget currentScreen = HomeLayout(); // الشاشة الافتراضية
 
   List<Widget> bottomScreens = [
-    FavoriteScreen(),
+    Favorite(),
     CardScreen(),
     HomeLayout(),
     AccountScreen(),
@@ -28,12 +29,6 @@ class FoodCubit extends Cubit<FoodState> {
   void changeBottomNavBar(int index) {
     currentIndex = index;
     currentScreen = bottomScreens[index];
-    emit(TravelBottomnavBarState());
-  }
-
-  // تنقل إلى أي صفحة جديدة مع الإبقاء على الـ BottomNavigationBar
-  void navigateToScreen(Widget screen) {
-    currentScreen = screen;
     emit(TravelBottomnavBarState());
   }
 
@@ -212,5 +207,14 @@ class FoodCubit extends Cubit<FoodState> {
     } catch (e) {
       emit(CategoryError(e.toString()));
     }
+  }  void getCategories() {
+    emit(CategoryLoadingState());
+    try {
+      List<Item> items = [];
+      emit(CategorySuccess(Items: items));
+    } catch (e) {
+      emit(CategoryError("حدث خطأ أثناء تحميل الفئات"));
+    }
   }
 }
+

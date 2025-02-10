@@ -11,7 +11,7 @@ class HomeLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
