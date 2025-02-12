@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../model/cubit/bloc.dart';
-import '../../model/cubit/states.dart';
+import '../../model/cubit/cubit/bloc.dart';
+import '../../model/cubit/cubit/states.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
 
 class HomePage extends StatelessWidget {
@@ -40,14 +40,14 @@ class HomePage extends StatelessWidget {
                   label: 'حسابي',
                 ),
               ],
-              selectedItemColor: Colors.deepOrange,
+              selectedItemColor: colorA,
               iconSize: 32,
               currentIndex: cubit.currentIndex,
               onTap: (index) {
                 cubit.changeBottomNavBar(index);
               },
               type: BottomNavigationBarType.fixed,
-              unselectedItemColor: Colors.black,
+              unselectedItemColor: Colors.black54,
               backgroundColor: colorB,
               elevation: 0,
               selectedLabelStyle: const TextStyle(

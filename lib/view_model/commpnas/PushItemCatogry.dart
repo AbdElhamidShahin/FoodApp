@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../model/cubit/bloc.dart';
-import '../../model/cubit/states.dart';
+import '../../model/cubit/cubit/bloc.dart';
+import '../../model/cubit/cubit/states.dart';
 import '../../viwes/wedget/CustomCatogryItem.dart';
 
 class Pushitemcatogry extends StatelessWidget {

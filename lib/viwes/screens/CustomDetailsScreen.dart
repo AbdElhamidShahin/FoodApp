@@ -22,7 +22,6 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
         backgroundColor: const Color.fromRGBO(42, 45, 52, 1),
         body: Stack(
           children: [
-            // الصورة العلوية
             Positioned(
               top: 0,
               left: 0,
@@ -198,11 +197,8 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CardScreen(),
-                          ),
+                        BuildFavoriteIcon(
+                          item: widget.item,
                         );
                       },
                       child: const Center(

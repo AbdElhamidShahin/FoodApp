@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/bloc.dart';
+import 'package:food_app/model/cubit/ItemProvider.dart';
+import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:food_app/viwes/screens/Home_Page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:provider/provider.dart';
-
 import 'model/cubit/item.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => ItemProvider()), // FavoriteProvider
+            create: (_) => ItemProvider()),
       ],
       child: BlocProvider<FoodCubit>(
         create: (context) => FoodCubit()..getCategories(),

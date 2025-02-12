@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/states.dart';
+import 'package:food_app/model/cubit/cubit/states.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:food_app/model/cubit/item.dart';
 
-import '../../viwes/screens/Account_Screen.dart';
-import '../../viwes/screens/Card_Screen.dart';
-import '../../viwes/screens/CatogaryScreen.dart';
-import '../../viwes/screens/Favorite_Screen.dart';
-import '../../viwes/screens/Home_Layout.dart';
+import '../../../viwes/screens/Account_Screen.dart';
+import '../../../viwes/screens/Card_Screen.dart';
+import '../../../viwes/screens/CatogaryScreen.dart';
+import '../../../viwes/screens/Favorite_Screen.dart';
+import '../../../viwes/screens/Home_Layout.dart';
 
 class FoodCubit extends Cubit<FoodState> {
   FoodCubit() : super((TravelInitialState()));
 
   static FoodCubit get(context) => BlocProvider.of<FoodCubit>(context);
-
 
   int currentIndex = 2; // افتراضيًا على الصفحة الرئيسية
   Widget currentScreen = HomeLayout(); // الشاشة الافتراضية
@@ -207,7 +206,9 @@ class FoodCubit extends Cubit<FoodState> {
     } catch (e) {
       emit(CategoryError(e.toString()));
     }
-  }  void getCategories() {
+  }
+
+  void getCategories() {
     emit(CategoryLoadingState());
     try {
       List<Item> items = [];
@@ -216,5 +217,12 @@ class FoodCubit extends Cubit<FoodState> {
       emit(CategoryError("حدث خطأ أثناء تحميل الفئات"));
     }
   }
-}
 
+
+  bool isFavorite =false;
+  void updateFavorite( bool IsFavorite){
+    isFavorite = IsFavorite;
+    emit(updateFavoriteState(isFavorite));
+  }
+
+}

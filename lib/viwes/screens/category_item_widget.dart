@@ -1,17 +1,24 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/bloc.dart';
+import 'package:food_app/model/cubit/cubit/bloc.dart';
+import 'package:food_app/model/cubit/cubit/states.dart';
 import 'package:food_app/model/cubit/item.dart';
-import 'package:food_app/model/cubit/states.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
+import 'package:food_app/viwes/wedget/buildFavoriteIcon.dart';
 
-class CustomItemCategory extends StatelessWidget {
-  const CustomItemCategory({super.key, required this.item});
+class CategoryItemWidget extends StatefulWidget {
+  CategoryItemWidget(
+      {super.key, required this.item, });
 
   final Item item;
 
+  @override
+  State<CategoryItemWidget> createState() => _CategoryItemWidgetState();
+}
+
+class _CategoryItemWidgetState extends State<CategoryItemWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -29,7 +36,8 @@ class CustomItemCategory extends StatelessWidget {
               closedElevation: 0.0,
               openElevation: 0.0,
               transitionDuration: const Duration(milliseconds: 800),
-              openBuilder: (context, _) => CustomDetailsScreen(item: item),
+              openBuilder: (context, _) =>
+                  CustomDetailsScreen(item: widget.item),
               closedBuilder: (context, openContainer) {
                 return GestureDetector(
                   onTap: openContainer,
@@ -40,7 +48,6 @@ class CustomItemCategory extends StatelessWidget {
                         clipBehavior: Clip.none,
                         children: [
                           Container(
-                            height: 180,
                             width: 180,
                             decoration: BoxDecoration(
                               color: colorBasic,
@@ -56,17 +63,17 @@ class CustomItemCategory extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.only(
-                                  top: 80, left: 8, right: 8, bottom: 10),
+                                  top: 80, left: 8, right: 8, bottom: 0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Hero(
-                                    tag: 'name_${item.name}',
+                                    tag: 'name_${widget.item.name}',
                                     child: Material(
                                       color: Colors.transparent,
                                       child: Text(
-                                        item.name,
+                                        widget.item.name,
                                         style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
@@ -76,17 +83,16 @@ class CustomItemCategory extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 5),
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Hero(
-                                        tag: 'price_${item.name}',
+                                        tag: 'price_${widget.item.name}',
                                         child: Material(
                                           color: Colors.transparent,
                                           child: Text(
-                                            item.price,
+                                            widget.item.price,
                                             style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
@@ -95,13 +101,8 @@ class CustomItemCategory extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      Hero(
-                                        tag: 'fav_${item.name}',
-                                        child: IconButton(
-                                          icon: const Icon(Icons.favorite_border,
-                                              size: 28, color: Colors.red),
-                                          onPressed: () {},
-                                        ),
+                                      BuildFavoriteIcon(
+                                        item: widget.item,
                                       ),
                                     ],
                                   ),
@@ -115,11 +116,12 @@ class CustomItemCategory extends StatelessWidget {
                             height: 140,
                             width: 140,
                             child: Hero(
-                              tag: 'image_${item.name}',
+                              tag: 'image_${widget.item.name}',
                               child: CircleAvatar(
                                 radius: 50,
                                 backgroundColor: Colors.grey[300],
-                                backgroundImage: NetworkImage(item.imageUrl),
+                                backgroundImage:
+                                    NetworkImage(widget.item.imageUrl),
                               ),
                             ),
                           ),
@@ -133,7 +135,6 @@ class CustomItemCategory extends StatelessWidget {
           } else {
             return const Center(child: Text("⚠ تحقق من الاتصال بالإنترنت"));
           }
-
         },
         listener: (context, state) {},
       ),

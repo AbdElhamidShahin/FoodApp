@@ -1,21 +1,26 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/bloc.dart';
-import 'package:food_app/model/cubit/states.dart';
-import 'package:food_app/viwes/screens/vv.dart';
+import 'package:food_app/model/cubit/ItemProvider.dart';
+import 'package:food_app/model/cubit/cubit/bloc.dart';
+import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
+import 'package:food_app/viwes/screens/category_item_widget.dart';
 import 'package:food_app/viwes/wedget/CustomAppBar.dart';
+import 'package:provider/provider.dart';
+import '../../model/cubit/cubit/states.dart';
 import '../../model/cubit/item.dart';
 
 class Catogaryscreen extends StatelessWidget {
   final int? ItemCount;
   final String text;
   final Item? item;
-  const Catogaryscreen({
+  Catogaryscreen({
     Key? key,
     this.ItemCount,
     required this.text,
     this.item,
   }) : super(key: key);
+  late bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,9 @@ class Catogaryscreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CategoryLoaded) {
                   final Items = state.Items;
+                  var cubit = FoodCubit.get(context);
 
+                  bool isFavorite = cubit.isFavorite;
                   return GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -47,10 +54,23 @@ class Catogaryscreen extends StatelessWidget {
                     ),
                     itemCount: Items.length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {},
-                        child: CustomItemCategory(item: Items[index]),
+                      return OpenContainer(
+                        transitionType: ContainerTransitionType.fadeThrough,
+                        closedColor: Colors.transparent,
+                        closedElevation: 0.0,
+                        openElevation: 0.0,
+                        transitionDuration: const Duration(milliseconds: 800),
+                        openBuilder: (context, _) =>
+                            CustomDetailsScreen(item: item!),
+                        closedBuilder: (context, openContainer) {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: CategoryItemWidget(
+                              item: Items[index],
 
+                            ),
+                          );
+                        },
                       );
                     },
                   );
