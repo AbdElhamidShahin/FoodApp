@@ -12,17 +12,19 @@ class ItemProvider with ChangeNotifier {
 
   List<Item> get items => _items;
 
-  void addItem(Item item) {
+  void addItem (Item item ){
     _items.add(item);
     _saveItems();
     notifyListeners();
   }
-
-  void removeItem(Item item) {
+  void removeItem(Item item ){
     _items.remove(item);
     _saveItems();
     notifyListeners();
   }
+
+
+
 
   void _saveItems() async {
     final prefs = await SharedPreferences.getInstance();
