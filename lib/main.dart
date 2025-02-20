@@ -5,7 +5,6 @@ import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:food_app/viwes/screens/Home_Page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:provider/provider.dart';
-import 'model/cubit/item.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +16,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (_) => ItemProvider()),
+        ChangeNotifierProvider(create: (context) => ItemProvider()),
+        ChangeNotifierProvider(create: (context) => ItemCard()),
       ],
       child: BlocProvider<FoodCubit>(
         create: (context) => FoodCubit()..getCategories(),

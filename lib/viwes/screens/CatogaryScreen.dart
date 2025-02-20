@@ -26,7 +26,7 @@ class Catogaryscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0), // تحديد الارتفاع
+        preferredSize: Size.fromHeight(100.0),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Customappbar(
@@ -63,12 +63,14 @@ class Catogaryscreen extends StatelessWidget {
                         openBuilder: (context, _) =>
                             CustomDetailsScreen(item: item!),
                         closedBuilder: (context, openContainer) {
-                          return GestureDetector(
-                            onTap: () {},
-                            child: CategoryItemWidget(
-                              item: Items[index],
-
-                            ),
+                          return CategoryItemWidget(
+                            item: Items[index],
+                            // onPressed: () {
+                            //   if (item != null) {
+                            //     Provider.of<ItemProvider>(context, listen: false).addItem(item!);
+                            //     cubit.updateFavorite(!isFavorite);
+                            //   }
+                            // },
                           );
                         },
                       );

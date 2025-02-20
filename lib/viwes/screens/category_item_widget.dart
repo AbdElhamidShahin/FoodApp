@@ -1,18 +1,18 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:food_app/model/cubit/cubit/states.dart';
 import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
 import 'package:food_app/viwes/wedget/buildFavoriteIcon.dart';
-import 'package:provider/provider.dart';
 
 class CategoryItemWidget extends StatefulWidget {
-  CategoryItemWidget(
-      {super.key, required this.item, });
+  CategoryItemWidget({
+    super.key,
+    required this.item,
+  });
 
   final Item item;
 
@@ -27,13 +27,6 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
       create: (context) => FoodCubit()..getCategories(),
       child: BlocConsumer<FoodCubit, FoodState>(
         builder: (context, state) {
-
-
-
-
-
-          var cubit = FoodCubit.get(context);
-          bool isFavorite = cubit.isFavorite;
           if (state is CategoryLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is CategoryError) {
@@ -110,21 +103,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                                           ),
                                         ),
                                       ),
-                                     IconButton(
-                                        onPressed: () {
-                                          if (widget.item != null) {
-                                            Provider.of<ItemProvider>(context, listen: false)
-                                                .addItem(widget.item);
-
-                                            cubit.updateFavorite(!isFavorite);
-                                          }
-                                        },
-                                        icon: Icon(
-                                          isFavorite ? Icons.favorite : Icons.favorite_border_outlined,
-                                          size: 32,
-                                          color: isFavorite ? Colors.red : Colors.red,
-                                        ),
-                                      ),
+                                      BuildFavoriteIcon(item: widget.item),
                                     ],
                                   ),
                                 ],
