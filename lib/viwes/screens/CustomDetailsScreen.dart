@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/model/cubit/ItemProvider.dart';
+import 'package:food_app/model/cubit/cubit/bloc.dart';
+import 'package:food_app/model/cubit/cubit/states.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
-import 'package:food_app/viwes/screens/Card_Screen.dart';
+import 'package:provider/provider.dart';
 import '../../model/cubit/item.dart';
 import '../../view_model/commpnas/helper/buildNumber.dart';
 import '../wedget/buildFavoriteIcon.dart';
@@ -15,6 +19,16 @@ class CustomDetailsScreen extends StatefulWidget {
 }
 
 class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
+  late bool isCard;
+
+  @override
+  void initState() {
+    super.initState();
+    isCard = Provider.of<ItemProvider>(context, listen: false)
+        .items
+        .contains(widget.item);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -165,7 +179,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 12),
                             child: Text(
-                              "${(double.parse(widget.item.price) * count).toStringAsFixed(0)}EGP",
+                              "${(double.parse(widget.item.price)*count).toStringAsFixed(0)}EGP",
                               style: const TextStyle(
                                 fontSize: 22,
                                 color: colorB,
@@ -197,8 +211,13 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                       ),
                       onPressed: () {
-                        BuildFavoriteIcon(
-                          item: widget.item,
+                        Provider.of<ItemCard>(context, listen: false)
+                            .addCard(widget.item);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('تمت إضافة المنتج إلى السلة!'),
+                            duration: Duration(seconds: 2),
+                          ),
                         );
                       },
                       child: const Center(
@@ -217,7 +236,6 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                 ),
               ),
             ),
-
             Align(
               alignment: Alignment.topRight,
               child: Column(

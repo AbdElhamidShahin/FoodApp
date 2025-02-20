@@ -1,28 +1,19 @@
-
-
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
 import 'package:food_app/viwes/wedget/CustomAppBar.dart';
-import 'package:food_app/viwes/wedget/CustomItemFavorite.dart';
+import 'package:food_app/viwes/wedget/customCardItem.dart';
 import 'package:provider/provider.dart';
+class Cardscreen extends StatelessWidget {
+  final List<Item> items;
 
-class Favorite extends StatefulWidget {
-  final Item? item;
+  const Cardscreen({super.key, required this.items});
 
-  Favorite({super.key, this.item});
-
-  @override
-  State<Favorite> createState() => _FavoriteState();
-}
-
-class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
-    final itemProvider = Provider.of<ItemProvider>(context);
+    final itemCard = Provider.of<ItemCard>(context);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -30,25 +21,21 @@ class _FavoriteState extends State<Favorite> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Customappbar(
-            text: 'My Favorite',
+            text: 'السلة',
           ),
         ),
       ),
-      body: itemProvider.items.isEmpty
+      body: itemCard.items.isEmpty
           ? Center(
         child: Text(
-          'No favorite items',
+          'السلة فارغة!',
           style: TextStyle(fontSize: 18, color: Colors.grey),
         ),
       )
-          : GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: .7,
-        ),
-        itemCount: itemProvider.items.length,
-        itemBuilder: (context, index) {
-          final item = itemProvider.items[index];
+          : ListView.builder(
+        itemCount: itemCard.items.length,
+        itemBuilder: (BuildContext context, int index) {
+          final item = itemCard.items[index];
 
           return OpenContainer(
             transitionType: ContainerTransitionType.fadeThrough,
@@ -60,7 +47,7 @@ class _FavoriteState extends State<Favorite> {
             closedBuilder: (context, openContainer) {
               return GestureDetector(
                 onTap: openContainer,
-                child: Customitemfavorite(item: item,)
+                child: Customcarditem(item: item),
               );
             },
           );

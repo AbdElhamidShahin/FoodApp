@@ -30,3 +30,7 @@ class updateFavoriteState extends FoodState {
   final bool isFavorite;
   updateFavoriteState(this.isFavorite);
 }
+class FoodCountState extends FoodState {
+  final int count;
+  FoodCountState(this.count);
+}

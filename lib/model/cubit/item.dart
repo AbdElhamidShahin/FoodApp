@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-
 class Item {
+  final String id;
+
   final String name;
   final String price;
   final String imageUrl;
@@ -10,7 +8,8 @@ class Item {
   final String? time;
   final String? ingredients;
 
-  Item({
+  Item({    required this.id,
+
     required this.number,
     required this.name,
     required this.price,
@@ -33,6 +32,8 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
+      id: json['id'],
+
       ingredients: json['ingredients'],
       name: json['name'],
       imageUrl: json['imageUrl'],
@@ -42,7 +43,6 @@ class Item {
     );
   }
 
-  // Override equality to help with .contains
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -53,4 +53,3 @@ class Item {
   @override
   int get hashCode => number.hashCode;
 }
-

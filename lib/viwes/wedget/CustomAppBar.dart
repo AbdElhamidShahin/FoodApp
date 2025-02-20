@@ -50,7 +50,7 @@ class Customappbar extends StatelessWidget {
                 color: colorBasic, borderRadius: BorderRadius.circular(12)),
             child: Row(
               mainAxisAlignment:
-                  MainAxisAlignment.end, // وضع الأيقونة في أقصى اليسار
+                  MainAxisAlignment.end,
 
               children: [
                 Padding(
