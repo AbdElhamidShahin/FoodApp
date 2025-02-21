@@ -127,18 +127,18 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                                 ),
                               ],
                             ),
-                            child: Row(
+                            child:Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                buildButton("-", () {
+                                buildButton("-", 12, 10, 20, () {
                                   if (count > 1) {
                                     setState(() {
                                       count--;
                                     });
                                   }
                                 }),
-                                buildNumber(count),
-                                buildButton("+", () {
+                                buildNumber(count, 16, 10, 20),
+                                buildButton("+", 12, 10, 20, () {
                                   setState(() {
                                     count++;
                                   });

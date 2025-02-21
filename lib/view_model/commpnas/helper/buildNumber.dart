@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 int count = 1;
-
-Widget buildNumber(int count) {
+Widget buildNumber(int count, double horizontal, double vertical, double fontSize) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+    padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
     decoration: BoxDecoration(
       color: Colors.red.shade900,
       shape: BoxShape.circle,
@@ -13,21 +12,23 @@ Widget buildNumber(int count) {
     child: Text(
       "$count",
       style: TextStyle(
-          fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+          fontSize: fontSize, color: Colors.white, fontWeight: FontWeight.bold),
     ),
   );
 }
 
-Widget buildButton(String text, VoidCallback onPressed) {
+Widget buildButton(String text, double horizontal, double vertical, double fontSize, VoidCallback onPressed) {
   return InkWell(
     onTap: onPressed,
     borderRadius: BorderRadius.circular(20),
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
       child: Text(
         text,
         style: TextStyle(
-            fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+            fontSize: fontSize,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
       ),
     ),
   );
