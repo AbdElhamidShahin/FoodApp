@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/ItemProvider.dart';
-import 'package:food_app/model/cubit/cubit/bloc.dart';
-import 'package:food_app/model/cubit/cubit/states.dart';
+import 'package:flutter/widgets.dart';
+import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
+import 'package:food_app/view_model/commpnas/helper/buildNumber.dart';
+import 'package:food_app/viwes/wedget/buildFavoriteIcon.dart';
 import 'package:provider/provider.dart';
-import '../../model/cubit/item.dart';
-import '../../view_model/commpnas/helper/buildNumber.dart';
-import '../wedget/buildFavoriteIcon.dart';
+
+import '../../model/cubit/ItemProvider.dart';
 
 class CustomDetailsScreen extends StatefulWidget {
   final Item item;
@@ -20,13 +19,14 @@ class CustomDetailsScreen extends StatefulWidget {
 
 class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
   late bool isCard;
+  int count = 1; // الكمية اللي هتختارها
 
   @override
   void initState() {
     super.initState();
     isCard = Provider.of<ItemProvider>(context, listen: false)
         .items
-        .contains(widget.item);
+        .any((element) => element.id == widget.item.id);
   }
 
   @override
@@ -43,7 +43,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
               bottom: 460,
               child: ClipRRect(
                 borderRadius:
-                    const BorderRadius.vertical(bottom: Radius.circular(16)),
+                const BorderRadius.vertical(bottom: Radius.circular(16)),
                 child: Image.network(
                   widget.item.imageUrl,
                   fit: BoxFit.cover,
@@ -98,17 +98,17 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                     Text(
                       "المكونات",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "مده الطهي:${widget.item.time}دقيقه",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       "${widget.item.number}",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -127,7 +127,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                                 ),
                               ],
                             ),
-                            child:Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 buildButton("-", 12, 10, 20, () {
@@ -179,11 +179,11 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 12),
                             child: Text(
-                              "${(double.parse(widget.item.price)*count).toStringAsFixed(0)}EGP",
+                              "${(double.parse(widget.item.price) * count)}EGP",
                               style: const TextStyle(
-                                fontSize: 22,
-                                color: colorB,
-                                fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                              color: colorB,
+                              fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -212,7 +212,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                       ),
                       onPressed: () {
                         Provider.of<ItemCard>(context, listen: false)
-                            .addCard(widget.item);
+                            .addCard(widget.item, count); // إضافة الكمية
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('تمت إضافة المنتج إلى السلة!'),

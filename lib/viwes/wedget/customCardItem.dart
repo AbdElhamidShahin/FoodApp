@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
+import 'package:food_app/view_model/commpnas/helper/buildNumber.dart';
 import 'package:provider/provider.dart';
-import '../../view_model/commpnas/helper/buildNumber.dart'; // Contains buildButton and buildNumber.
 
 class Customcarditem extends StatefulWidget {
-  const Customcarditem({super.key, required this.item});
+  const Customcarditem({super.key, required this.item, required this.quantity});
   final Item item;
+  final int quantity;
 
   @override
   State<Customcarditem> createState() => _CustomcarditemState();
 }
 
 class _CustomcarditemState extends State<Customcarditem> {
-  int count = 1; // Declare a local counter for this item.
+  late int count;
+
+  @override
+  void initState() {
+    super.initState();
+    count = widget.quantity; // تعيين الكمية الافتراضية
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +66,9 @@ class _CustomcarditemState extends State<Customcarditem> {
                       setState(() {
                         count--;
                       });
+                      // تحديث الكمية في السلة
+                      Provider.of<ItemCard>(context, listen: false)
+                          .addCard(widget.item, count);
                     }
                   }),
                   buildNumber(count, 16, 10, 20),
@@ -66,6 +76,9 @@ class _CustomcarditemState extends State<Customcarditem> {
                     setState(() {
                       count++;
                     });
+                    // تحديث الكمية في السلة
+                    Provider.of<ItemCard>(context, listen: false)
+                        .addCard(widget.item, count);
                   }),
                 ],
               ),
@@ -80,9 +93,9 @@ class _CustomcarditemState extends State<Customcarditem> {
                       color: colorA, fontWeight: FontWeight.bold, fontSize: 24),
                 ),
                 Text(
-                  "${widget.item.price}EGP",
+                  "${(double.parse(widget.item.price) * count)}EGP",
                   style: const TextStyle(
-                      color: colorA, fontWeight: FontWeight.bold, fontSize: 16),
+                  color: colorA, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),

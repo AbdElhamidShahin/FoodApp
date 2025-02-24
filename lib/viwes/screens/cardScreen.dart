@@ -1,17 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
-import 'package:food_app/model/cubit/cubit/bloc.dart';
-import 'package:food_app/model/cubit/cubit/states.dart';
 import 'package:food_app/model/cubit/item.dart';
-import 'package:food_app/view_model/commpnas/helper/buildNumber.dart'; // Assumes buildButton and buildNumber are defined here.
+import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
 import 'package:food_app/viwes/wedget/CustomAppBar.dart';
 import 'package:food_app/viwes/wedget/customCardItem.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../view_model/commpnas/color.dart';
 
 class Cardscreen extends StatelessWidget {
   final List<Item> items;
@@ -34,7 +29,6 @@ class Cardscreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // If there are no items show an empty message.
           itemCard.items.isEmpty
               ? const Center(
                   child: Text(
@@ -43,11 +37,11 @@ class Cardscreen extends StatelessWidget {
                   ),
                 )
               : Expanded(
-                  // Wrap ListView.builder in Expanded to constrain its height.
                   child: ListView.builder(
                     itemCount: itemCard.items.length,
                     itemBuilder: (BuildContext context, int index) {
                       final item = itemCard.items[index];
+                      final quantity = itemCard.getQuantity(item); // جلب الكمية
                       return OpenContainer(
                         transitionType: ContainerTransitionType.fadeThrough,
                         closedColor: Colors.transparent,
@@ -59,24 +53,24 @@ class Cardscreen extends StatelessWidget {
                         closedBuilder: (context, openContainer) {
                           return GestureDetector(
                             onTap: openContainer,
-                            child: Customcarditem(item: item),
+                            child:
+                                Customcarditem(item: item, quantity: quantity),
                           );
                         },
                       );
                     },
                   ),
                 ),
-          // BlocBuilder to update the total price display.
-          BlocBuilder<FoodCubit, FoodState>(
-            builder: (context, state) {
-              if (state is FoodCountState) {
-                double totalPrice = 0;
-                // Make sure your FoodCountState logic applies to each item correctly.
-                for (var item in itemCard.items) {
-                  totalPrice += double.parse(item.price) * state.count;
-                }
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -87,7 +81,7 @@ class Cardscreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 4, horizontal: 12),
                         child: Text(
-                          "${totalPrice.toStringAsFixed(0)}EGP",
+                          "${itemCard.getTotalPrice().toStringAsFixed(0)}EGP",
                           style: const TextStyle(
                             fontSize: 22,
                             color: colorB,
@@ -96,9 +90,9 @@ class Cardscreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 30),
+                    const SizedBox(width: 12),
                     const Text(
-                      "المجموع",
+                      ": المجموع",
                       style: TextStyle(
                         fontSize: 28,
                         color: colorA,
@@ -106,11 +100,47 @@ class Cardscreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                );
-              } else {
-                return Container(); // Fallback UI if state is not FoodCountState.
-              }
-            },
+                ),
+                SizedBox(
+                  height: 24,
+                ),
+
+
+
+
+
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorB,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('تم اضافة العناصر الى الطلب!'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  child: const Center(
+                    child: Text(
+                      "اتمام الطلب",
+                      style: TextStyle(
+                        color: colorA,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
+                  ),
+                )
+
+
+              ],
+            ),
           ),
         ],
       ),

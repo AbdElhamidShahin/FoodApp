@@ -8,8 +8,8 @@ class Item {
   final String? time;
   final String? ingredients;
 
-  Item({    required this.id,
-
+  Item({
+    required this.id,
     required this.number,
     required this.name,
     required this.price,
@@ -24,7 +24,7 @@ class Item {
 
       'time': time,
       'name': name,
-      'price': price, // Changed from 'description' to 'price'
+      'price': price,
       'imageUrl': imageUrl,
       'number': number,
     };
@@ -33,7 +33,6 @@ class Item {
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
       id: json['id'],
-
       ingredients: json['ingredients'],
       name: json['name'],
       imageUrl: json['imageUrl'],
@@ -43,13 +42,4 @@ class Item {
     );
   }
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Item &&
-          runtimeType == other.runtimeType &&
-          number == other.number; // use a unique identifier
-
-  @override
-  int get hashCode => number.hashCode;
 }
