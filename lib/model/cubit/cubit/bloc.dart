@@ -23,7 +23,8 @@ class FoodCubit extends Cubit<FoodState> {
       items: [],
     ),
     HomeLayout(),
-    settingScreen()  ];
+    settingScreen()
+  ];
 
   void changeBottomNavBar(int index) {
     currentIndex = index;
@@ -224,6 +225,7 @@ class FoodCubit extends Cubit<FoodState> {
     this.isFavorite = isFavorite;
     emit(updateFavoriteState(isFavorite));
   }
+
   void increment() {
     if (state is FoodCountState) {
       final currentState = state as FoodCountState;

@@ -1,15 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/firebase_options.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
+import 'package:food_app/viwes/Login/LoginScreen.dart';
 import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:food_app/viwes/screens/Home_Page.dart';
-import 'package:food_app/viwes/wedget/HH.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'viwes/screens/Home LoginScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Supabase.initialize(
     url: 'https://msqkquddsfpmwwjylvms.supabase.co',
     anonKey:
@@ -28,7 +35,6 @@ void main() async {
     ),
   );
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -54,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark(), // Dark theme
       themeMode: _themeMode, // Use the selected theme mode
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: Home_loginscreen(),
       routes: {
         '/account': (context) => AccountScreen(toggleTheme: _toggleTheme),
       },
