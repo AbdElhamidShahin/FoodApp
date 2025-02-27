@@ -41,49 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDmD7SwPmo5PtuDg4Jm_OEA0HivgBVE4a0',
-    appId: '1:567819550700:web:7889fc90a38da96b948ac9',
-    messagingSenderId: '567819550700',
-    projectId: 'food-app-6e8da',
-    authDomain: 'food-app-6e8da.firebaseapp.com',
-    storageBucket: 'food-app-6e8da.firebasestorage.app',
-    measurementId: 'G-EH67K120M8',
+    apiKey: 'AIzaSyCP-nMB9byhoFXCvMrEyUBTIvVjDVoAf14',
+    appId: '1:253004647318:web:95ac54eee990f56468ebb7',
+    messagingSenderId: '253004647318',
+    projectId: 'toursm-app',
+    authDomain: 'toursm-app.firebaseapp.com',
+    storageBucket: 'toursm-app.firebasestorage.app',
+    measurementId: 'G-BYNGQM575R',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCW4JXWrGvP_6p1m5DPgwW7MIcTga1il7w',
-    appId: '1:567819550700:android:4d3bd1f197a80e16948ac9',
-    messagingSenderId: '567819550700',
-    projectId: 'food-app-6e8da',
-    storageBucket: 'food-app-6e8da.firebasestorage.app',
+    apiKey: 'AIzaSyAFZK6eTIzKUPxhKgpSg4GLyl0McbHX_bQ',
+    appId: '1:253004647318:android:07ef731a5ab4c89468ebb7',
+    messagingSenderId: '253004647318',
+    projectId: 'toursm-app',
+    storageBucket: 'toursm-app.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBlaZYXsKpPSxqdyxYux1GhebLs6fZF7hE',
-    appId: '1:567819550700:ios:aab04758ea222306948ac9',
-    messagingSenderId: '567819550700',
-    projectId: 'food-app-6e8da',
-    storageBucket: 'food-app-6e8da.firebasestorage.app',
+    apiKey: 'AIzaSyDFarSj64pgauHmKG4qpM5UT7qp9Z6tK6s',
+    appId: '1:253004647318:ios:220f29f01044ed6868ebb7',
+    messagingSenderId: '253004647318',
+    projectId: 'toursm-app',
+    storageBucket: 'toursm-app.firebasestorage.app',
     iosBundleId: 'com.example.foodApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBlaZYXsKpPSxqdyxYux1GhebLs6fZF7hE',
-    appId: '1:567819550700:ios:aab04758ea222306948ac9',
-    messagingSenderId: '567819550700',
-    projectId: 'food-app-6e8da',
-    storageBucket: 'food-app-6e8da.firebasestorage.app',
+    apiKey: 'AIzaSyDFarSj64pgauHmKG4qpM5UT7qp9Z6tK6s',
+    appId: '1:253004647318:ios:220f29f01044ed6868ebb7',
+    messagingSenderId: '253004647318',
+    projectId: 'toursm-app',
+    storageBucket: 'toursm-app.firebasestorage.app',
     iosBundleId: 'com.example.foodApp',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDmD7SwPmo5PtuDg4Jm_OEA0HivgBVE4a0',
-    appId: '1:567819550700:web:bba19bda31d847fd948ac9',
-    messagingSenderId: '567819550700',
-    projectId: 'food-app-6e8da',
-    authDomain: 'food-app-6e8da.firebaseapp.com',
-    storageBucket: 'food-app-6e8da.firebasestorage.app',
-    measurementId: 'G-G4GLCZ6NHM',
+    apiKey: 'AIzaSyCb8t4L1keKXPQvc4Jx5NIYQLvcpZL_SFQ',
+    appId: '1:253004647318:web:da959188b50f957168ebb7',
+    messagingSenderId: '253004647318',
+    projectId: 'toursm-app',
+    authDomain: 'toursm-app.firebaseapp.com',
+    storageBucket: 'toursm-app.firebasestorage.app',
+    measurementId: 'G-LFHVNQQH0H',
   );
-
 }

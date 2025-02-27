@@ -89,16 +89,5 @@ class ItemCard with ChangeNotifier {
     await prefs.setString('Card_items', data);
   }
 
-  void _loadCard() async {
-    final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getString('Card_items');
-    if (data != null) {
-      final Map<String, dynamic> json = jsonDecode(data);
-      _items = (json['items'] as List).map((e) => Item.fromJson(e)).toList();
-      _itemQuantities = (json['quantities'] as Map<String, dynamic>).map(
-        (key, value) => MapEntry(key, value),
-      );
-      notifyListeners();
-    }
-  }
+
 }

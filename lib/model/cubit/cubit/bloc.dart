@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/model/cubit/cubit/states.dart';
+import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:food_app/viwes/screens/cardScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:food_app/model/cubit/item.dart';
 import '../../../viwes/screens/CatogaryScreen.dart';
 import '../../../viwes/screens/Favorite_Screen.dart';
 import '../../../viwes/screens/Home_Layout.dart';
-import '../../../viwes/wedget/HH.dart';
 
 class FoodCubit extends Cubit<FoodState> {
   FoodCubit() : super((TravelInitialState()));
@@ -23,7 +23,7 @@ class FoodCubit extends Cubit<FoodState> {
       items: [],
     ),
     HomeLayout(),
-    settingScreen()
+    AccountScreen()
   ];
 
   void changeBottomNavBar(int index) {

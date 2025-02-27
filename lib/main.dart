@@ -1,22 +1,21 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/firebase_options.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
-import 'package:food_app/viwes/Login/LoginScreen.dart';
 import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:food_app/viwes/screens/Home_Page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'viwes/screens/Home LoginScreen.dart';
+import 'view_model/commpnas/helper/ThemeProvider.dart'; // Import ThemeProvider
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
+  FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true);
   await Supabase.initialize(
     url: 'https://msqkquddsfpmwwjylvms.supabase.co',
     anonKey:
@@ -27,6 +26,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => ItemProvider()),
         ChangeNotifierProvider(create: (context) => ItemCard()),
+
+        ChangeNotifierProvider(
+            create: (context) => ThemeProvider()), // Add ThemeProvider
       ],
       child: BlocProvider<FoodCubit>(
         create: (context) => FoodCubit()..getCategories(),
@@ -36,34 +38,29 @@ void main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  ThemeMode _themeMode = ThemeMode.system;
-
-  void _toggleTheme(bool isDark) {
-    setState(() {
-      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.light(), // Light theme
-      darkTheme: ThemeData.dark(), // Dark theme
-      themeMode: _themeMode, // Use the selected theme mode
+      theme: ThemeData(
+        fontFamily: 'Poppins',
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        fontFamily: 'Poppins',
+        brightness: Brightness.dark,
+      ),
+      themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: Home_loginscreen(),
+      home: HomePage(),
       routes: {
-        '/account': (context) => AccountScreen(toggleTheme: _toggleTheme),
+        '/account': (context) => AccountScreen(),
       },
     );
+
   }
 }
