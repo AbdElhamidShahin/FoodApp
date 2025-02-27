@@ -8,11 +8,13 @@ class Customtextfeild extends StatelessWidget {
     required this.hintText,
     this.onChanged,
     this.validator,
+    this.controller,
   });
 
   final String hintText;
   Function(String)? onChanged;
   final String? Function(String?)? validator;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class Customtextfeild extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            controller: controller,
             onChanged: onChanged,
             validator: validator,
             textAlign: TextAlign.center,
