@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
+import 'package:food_app/view_model/commpnas/helper/LocalStorageAccount.dart';
 import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:food_app/viwes/wedget/CustomButton.dart';
 import 'package:food_app/viwes/wedget/Customtextfeild.dart';
@@ -67,10 +68,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           child: Column(
             children: [
               GestureDetector(
-                onTap: () async {
-                  print("Container tapped!"); // التحقق من الضغط
-                  await _pickImage();
-                },
+                onTap: _pickImage,
                 child: Container(
                   height: 160,
                   width: 160,
@@ -79,20 +77,20 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                     borderRadius: BorderRadius.circular(100),
                     image: _imageFile != null
                         ? DecorationImage(
-                      image: FileImage(_imageFile!),
-                      fit: BoxFit.cover,
-                    )
+                            image: FileImage(_imageFile!),
+                            fit: BoxFit.cover,
+                          )
                         : null,
                   ),
                   child: _imageFile == null
                       ? Center(
-                    child: Image(
-                      height: 130,
-                      width: 130,
-                      image: AssetImage(
-                          'assets/LoginImage/Camira-removebg-preview.png'),
-                    ),
-                  )
+                          child: Image(
+                            height: 130,
+                            width: 130,
+                            image: AssetImage(
+                                'assets/LoginImage/Camira-removebg-preview.png'),
+                          ),
+                        )
                       : null,
                 ),
               ),
@@ -137,15 +135,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                   text: 'حفظ التعديلات',
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      await prefs.setString('name', _nameController.text);
-                      await prefs.setString('phone', _phoneController.text);
-                      await prefs.setString('email', _emailController.text);
-
-                      if (_imageFile != null) {
-                        await prefs.setString('imagePath', _imageFile!.path); // تأكد من أنك تحفظ المسار الصحيح
-                      }
-
+                      await UserDataManager.saveUserData(
+                        name: _nameController.text,
+                        phone: _phoneController.text,
+                        email: _emailController.text,
+                        imagePath: _imageFile?.path,
+                      );
                       Navigator.pop(context, true);
                     }
                   },

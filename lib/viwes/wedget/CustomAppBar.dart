@@ -1,10 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:food_app/view_model/commpnas/helper/LocalStorageAccount.dart';
 
 import '../../view_model/commpnas/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Customappbar extends StatelessWidget {
+class Customappbar extends StatefulWidget {
   const Customappbar({super.key, required this.text});
   final String text;
+
+  @override
+  State<Customappbar> createState() => _CustomappbarState();
+}
+class _CustomappbarState extends State<Customappbar> {
+  String? image;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    Map<String, String?> userData = await UserDataManager.loadUserData();
+    setState(() {
+      image = userData['imagePath'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,15 +37,26 @@ class Customappbar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
-              Image(
-                image: NetworkImage(
-                    'https://img.freepik.com/premium-vector/avatar-business-women-vector-illustration-flat-2_764382-57434.jpg'),
-                height: 50,
-                width: 50,
+              SizedBox(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(150),
+                  child: image != null && File(image!).existsSync()
+                      ? Image.file(
+                    File(image!),
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  )
+                      : Image.network(
+                    'https://img.freepik.com/premium-vector/avatar-business-women-vector-illustration-flat-2_764382-57434.jpg',
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
               ),
               Spacer(),
               Text(
-                text,
+                widget.text,
                 style: TextStyle(
                     color: colorB, fontSize: 24, fontWeight: FontWeight.bold),
               ),
@@ -49,9 +84,7 @@ class Customappbar extends StatelessWidget {
             decoration: BoxDecoration(
                 color: colorBasic, borderRadius: BorderRadius.circular(12)),
             child: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.end,
-
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),

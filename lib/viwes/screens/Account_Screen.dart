@@ -1,13 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:food_app/model/cubit/item.dart';
+import 'package:food_app/view_model/commpnas/helper/LocalStorageAccount.dart';
 import 'package:food_app/viwes/screens/EditAccuntScreeen.dart';
 import 'package:food_app/viwes/screens/Favorite_Screen.dart';
 import 'package:food_app/viwes/screens/Home%20LoginScreen.dart';
 import 'package:food_app/viwes/screens/cardScreen.dart';
 import 'package:food_app/viwes/wedget/CustomItemSetteings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/commpnas/color.dart';
 import '../../view_model/commpnas/helper/ThemeProvider.dart';
@@ -20,7 +18,6 @@ class AccountScreen extends StatefulWidget {
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
-
 class _AccountScreenState extends State<AccountScreen> {
   String? name, phone, email, image;
 
@@ -31,14 +28,15 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Future<void> loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, String?> userData = await UserDataManager.loadUserData();
     setState(() {
-      name = prefs.getString('name');
-      email = prefs.getString('email');
-      phone = prefs.getString('phone');
-      image = prefs.getString('imagePath');
+      name = userData['name'];
+      email = userData['email'];
+      phone = userData['phone'];
+      image = userData['imagePath'];
     });
   }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -62,7 +60,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 MaterialPageRoute(builder: (context) => EditAccountScreen()),
               );
               if (result == true) {
-                await loadUserData(); // إعادة تحميل البيانات
+                await loadUserData();
               }
             },
             icon: const Icon(
@@ -72,9 +70,9 @@ class _AccountScreenState extends State<AccountScreen> {
             )),
         title: const Center(
             child: Text(
-          'حسابي',
-          style: TextStyle(color: colorA, fontWeight: FontWeight.bold),
-        )),
+              'حسابي',
+              style: TextStyle(color: colorA, fontWeight: FontWeight.bold),
+            )),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -137,8 +135,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => Cardscreen(
-                          items: [],
-                        )),
+                      items: [],
+                    )),
               );
             }),
             CustomItemSetteings('العناوين', () {}),
