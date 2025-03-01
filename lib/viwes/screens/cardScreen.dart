@@ -104,12 +104,6 @@ class Cardscreen extends StatelessWidget {
                 SizedBox(
                   height: 24,
                 ),
-
-
-
-
-
-
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colorB,
@@ -137,8 +131,6 @@ class Cardscreen extends StatelessWidget {
                     ),
                   ),
                 )
-
-
               ],
             ),
           ),

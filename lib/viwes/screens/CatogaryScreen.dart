@@ -1,12 +1,10 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
 import 'package:food_app/viwes/screens/category_item_widget.dart';
 import 'package:food_app/viwes/wedget/CustomAppBar.dart';
-import 'package:provider/provider.dart';
 import '../../model/cubit/cubit/states.dart';
 import '../../model/cubit/item.dart';
 

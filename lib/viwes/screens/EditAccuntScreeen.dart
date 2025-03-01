@@ -42,10 +42,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AccountScreen()),
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_forward_ios_rounded,

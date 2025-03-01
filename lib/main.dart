@@ -61,6 +61,5 @@ class MyApp extends StatelessWidget {
         '/account': (context) => AccountScreen(),
       },
     );
-
   }
 }

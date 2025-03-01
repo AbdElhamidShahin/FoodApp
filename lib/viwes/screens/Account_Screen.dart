@@ -18,6 +18,7 @@ class AccountScreen extends StatefulWidget {
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
+
 class _AccountScreenState extends State<AccountScreen> {
   String? name, phone, email, image;
 
@@ -70,9 +71,9 @@ class _AccountScreenState extends State<AccountScreen> {
             )),
         title: const Center(
             child: Text(
-              'حسابي',
-              style: TextStyle(color: colorA, fontWeight: FontWeight.bold),
-            )),
+          'حسابي',
+          style: TextStyle(color: colorA, fontWeight: FontWeight.bold),
+        )),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +89,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       Text("${name ?? 'غير محدد'} :الاسم",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 14,
                               color: colorA)),
                       const SizedBox(
                         height: 6,
@@ -96,7 +97,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       Text("${phone ?? 'غير محدد'} :رقم الهاتف",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 14,
                               color: colorA)),
                       const SizedBox(
                         height: 6,
@@ -104,27 +105,28 @@ class _AccountScreenState extends State<AccountScreen> {
                       Text("${email ?? 'غير محدد'} :الايميل",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 14,
                               color: colorA)),
                     ],
                   ),
-                ),
+                ),Spacer(),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(150),
                   child: image != null && File(image!).existsSync()
                       ? Image.file(
-                    File(image!),
-                    width: 160,
-                    height: 160,
-                    fit: BoxFit.cover,
-                  )
+                          File(image!),
+                          width: 160,
+                          height: 160,
+                          fit: BoxFit.cover,
+                        )
                       : Image.network(
-                    'https://img.freepik.com/premium-vector/avatar-business-women-vector-illustration-flat-2_764382-57434.jpg',
-                    width: 160,
-                    height: 160,
-                    fit: BoxFit.cover,
-                  ),
+                          'https://img.freepik.com/premium-vector/avatar-business-women-vector-illustration-flat-2_764382-57434.jpg',
+                          width: 160,
+                          height: 160,
+                          fit: BoxFit.cover,
+                        ),
                 ),
+                SizedBox(width: 8,),
               ],
             ),
             SizedBox(
@@ -135,8 +137,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => Cardscreen(
-                      items: [],
-                    )),
+                          items: [],
+                        )),
               );
             }),
             CustomItemSetteings('العناوين', () {}),

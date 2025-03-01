@@ -13,7 +13,7 @@ class Pushitemcatogry extends StatelessWidget {
       listener: (BuildContext context, state) {},
       builder: (BuildContext context, state) {
         var cubit = FoodCubit.get(context);
-        var itemCount = cubit.items.take(4).toList(); //هستدعس 4 عناصر فقط
+        var itemCount = cubit.items.take(4).toList();
 
         return Row(
           children: itemCount.map((item) {

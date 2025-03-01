@@ -1,6 +1,3 @@
-
-
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
@@ -36,36 +33,37 @@ class _FavoriteState extends State<Favorite> {
       ),
       body: itemProvider.items.isEmpty
           ? Center(
-        child: Text(
-          'No favorite items',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      )
+              child: Text(
+                'No favorite items',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+            )
           : GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: .7,
-        ),
-        itemCount: itemProvider.items.length,
-        itemBuilder: (context, index) {
-          final item = itemProvider.items[index];
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: .7,
+              ),
+              itemCount: itemProvider.items.length,
+              itemBuilder: (context, index) {
+                final item = itemProvider.items[index];
 
-          return OpenContainer(
-            transitionType: ContainerTransitionType.fadeThrough,
-            closedColor: Colors.transparent,
-            closedElevation: 0.0,
-            openElevation: 0.0,
-            transitionDuration: const Duration(milliseconds: 800),
-            openBuilder: (context, _) => CustomDetailsScreen(item: item),
-            closedBuilder: (context, openContainer) {
-              return GestureDetector(
-                onTap: openContainer,
-                child: Customitemfavorite(item: item,)
-              );
-            },
-          );
-        },
-      ),
+                return OpenContainer(
+                  transitionType: ContainerTransitionType.fadeThrough,
+                  closedColor: Colors.transparent,
+                  closedElevation: 0.0,
+                  openElevation: 0.0,
+                  transitionDuration: const Duration(milliseconds: 800),
+                  openBuilder: (context, _) => CustomDetailsScreen(item: item),
+                  closedBuilder: (context, openContainer) {
+                    return GestureDetector(
+                        onTap: openContainer,
+                        child: Customitemfavorite(
+                          item: item,
+                        ));
+                  },
+                );
+              },
+            ),
     );
   }
 }

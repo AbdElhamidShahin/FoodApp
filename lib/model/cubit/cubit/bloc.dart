@@ -178,6 +178,10 @@ class FoodCubit extends Cubit<FoodState> {
       },
     },
   ];
+
+
+
+
   Future<void> fetchCategoryData(String tableName) async {
     try {
       emit(CategoryLoadingState());
