@@ -40,10 +40,9 @@ class Catogaryscreen extends StatelessWidget {
                 if (state is CategoryLoadingState) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CategoryLoaded) {
-                  final Items = state.Items;
+                  final Items = state.items;
                   var cubit = FoodCubit.get(context);
 
-                  bool isFavorite = cubit.isFavorite;
                   return GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
@@ -63,12 +62,6 @@ class Catogaryscreen extends StatelessWidget {
                         closedBuilder: (context, openContainer) {
                           return CategoryItemWidget(
                             item: Items[index],
-                            // onPressed: () {
-                            //   if (item != null) {
-                            //     Provider.of<ItemProvider>(context, listen: false).addItem(item!);
-                            //     cubit.updateFavorite(!isFavorite);
-                            //   }
-                            // },
                           );
                         },
                       );

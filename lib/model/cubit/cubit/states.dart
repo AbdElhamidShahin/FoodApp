@@ -9,15 +9,15 @@ class TravelBottomnavBarState extends FoodState {}
 class CategoryLoadingState extends FoodState {}
 
 class CategorySuccess extends FoodState {
-  final List<Item> Items;
+  final List<Item> items;
 
-  CategorySuccess({required this.Items});
+  CategorySuccess({required this.items});
 }
 
 class CategoryLoaded extends FoodState {
-  final List<Item> Items;
+  final List<Item> items;
 
-  CategoryLoaded(this.Items);
+  CategoryLoaded(this.items);
 }
 
 class CategoryError extends FoodState {
@@ -34,5 +34,10 @@ class FoodCountState extends FoodState {
   final int count;
   FoodCountState(this.count);
 }
+
+class CategoryInitial extends FoodState {}
+
+
+
 
 

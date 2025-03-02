@@ -187,26 +187,23 @@ class FoodCubit extends Cubit<FoodState> {
       emit(CategoryLoadingState());
 
       final response = await Supabase.instance.client
-          .from(tableName)
-          .select('name, price, image_url');
+          .from(tableName)  // تأكد من استخدام `tableName` الصحيح
+          .select('id, name, price, image_url, ingredients, time, number');
 
-      if (response == null || response.isEmpty) {
-        print("No data found for table $tableName");
+      if (response.isEmpty) {
         emit(CategoryError('No data found for table "$tableName".'));
         return;
       }
 
-      final List<Item> items = (response as List).map((item) {
-        return Item(
-          id: item['id'] ?? 'No Name',
-          ingredients: item['ingredients'] ?? 'No Name',
-          name: item['name'] ?? 'No Name',
-          price: item['price'] ?? 'No price',
-          imageUrl: item['image_url'] ?? '',
-          time: item['time'] ?? '',
-          number: item['number'] ?? '',
-        );
-      }).toList();
+      final List<Item> items = response.map((item) => Item(
+        id: item['id']?.toString() ?? '0',
+        name: item['name'] ?? 'No Name',
+        price: item['price']?.toString() ?? '0',
+        imageUrl: item['image_url'] ?? '',
+        ingredients: item['ingredients'] ?? 'No Ingredients',
+        time: item['time']?.toString() ?? 'Unknown',
+        number: item['number']?.toString() ?? '0',
+      )).toList();
 
       emit(CategoryLoaded(items));
     } catch (e) {
@@ -218,7 +215,7 @@ class FoodCubit extends Cubit<FoodState> {
     emit(CategoryLoadingState());
     try {
       List<Item> items = [];
-      emit(CategorySuccess(Items: items));
+      emit(CategorySuccess(items: items));
     } catch (e) {
       emit(CategoryError("حدث خطأ أثناء تحميل الفئات"));
     }
@@ -245,4 +242,5 @@ class FoodCubit extends Cubit<FoodState> {
       }
     }
   }
+
 }

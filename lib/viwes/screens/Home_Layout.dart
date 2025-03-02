@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/model/cubit/item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/model/cubit/cubit/states.dart';
 import 'package:food_app/view_model/commpnas/PushItemCatogryHome.dart';
-import 'package:food_app/view_model/commpnas/color.dart';
 
+import '../../model/cubit/cubit/bloc.dart';
 import '../../view_model/commpnas/PushItemCatogry.dart';
 import '../wedget/CustomAppBar.dart';
 import '../wedget/CustomImageHome.dart';
 import '../wedget/CustomRowHome.dart';
 
 class HomeLayout extends StatelessWidget {
-  const HomeLayout({super.key, this.item});
-  final Item? item;
+  const HomeLayout({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Expanded(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
@@ -29,11 +30,14 @@ class HomeLayout extends StatelessWidget {
               Customrowhome(
                 text: "الأكثر طلبا",
               ),
-              item != null
-                  ? CustomImageHome(item: item!)
-                  : const SizedBox.shrink(),
+              Pushitemcatogryhome(
+                tableName: 'best',
+              ),
               Customrowhome(
                 text: "العروض لهذا الاسبوع",
+              ),
+              Pushitemcatogryhome(
+                tableName: 'best',
               ),
             ],
           ),
