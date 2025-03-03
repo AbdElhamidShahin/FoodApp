@@ -1,12 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/cubit/states.dart';
-import 'package:food_app/view_model/commpnas/PushItemCatogryHome.dart';
+import 'package:food_app/view_model/commpnas/PushItemCatogry.dart';
+import 'package:food_app/viwes/wedget/CustomAppBar.dart';
 
-import '../../model/cubit/cubit/bloc.dart';
-import '../../view_model/commpnas/PushItemCatogry.dart';
-import '../wedget/CustomAppBar.dart';
-import '../wedget/CustomImageHome.dart';
+import '../../view_model/commpnas/PushItemCatogryHome.dart';
 import '../wedget/CustomRowHome.dart';
 
 class HomeLayout extends StatelessWidget {
@@ -32,12 +29,14 @@ class HomeLayout extends StatelessWidget {
               ),
               Pushitemcatogryhome(
                 tableName: 'best',
+                uniqueId: '1', // معرّف فريد
               ),
               Customrowhome(
                 text: "العروض لهذا الاسبوع",
               ),
               Pushitemcatogryhome(
-                tableName: 'best',
+                tableName: 'offers',
+                uniqueId: '2', // معرّف فريد
               ),
             ],
           ),

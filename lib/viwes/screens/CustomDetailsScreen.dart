@@ -19,7 +19,7 @@ class CustomDetailsScreen extends StatefulWidget {
 
 class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
   late bool isCard;
-  int count = 1; // الكمية اللي هتختارها
+  int count = 1;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
               bottom: 460,
               child: ClipRRect(
                 borderRadius:
-                const BorderRadius.vertical(bottom: Radius.circular(16)),
+                    const BorderRadius.vertical(bottom: Radius.circular(16)),
                 child: Image.network(
                   widget.item.imageUrl,
                   fit: BoxFit.cover,
@@ -76,7 +76,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                       child: Row(
                         children: [
                           Text(
-                            "${(double.parse(widget.item.price)).toStringAsFixed(0)}EGP",
+                            "${(double.parse(widget.item.price))}EGP",
                             style: TextStyle(
                               fontSize: 26,
                               color: colorA,
@@ -95,20 +95,38 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                         ],
                       ),
                     ),
-                    Text(
-                      "المكونات",
-                      style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "المكونات",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${widget.item.ingredients}',
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 6,
                     ),
                     Text(
                       "مده الطهي:${widget.item.time}دقيقه",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${widget.item.number}",
+                      "تكفي:${widget.item.number}",
                       style:
-                      TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -181,9 +199,9 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             child: Text(
                               "${(double.parse(widget.item.price) * count)}EGP",
                               style: const TextStyle(
-                              fontSize: 22,
-                              color: colorB,
-                              fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: colorB,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

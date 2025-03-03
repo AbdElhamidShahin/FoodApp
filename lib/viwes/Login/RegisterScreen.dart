@@ -163,7 +163,7 @@ class Registerscreen extends StatelessWidget {
                                     context,
                                     ContentType.success,
                                     'تم التسجيل بنجاح',
-                                    'سيتم تحويلك الآن',
+                                    'سيتم تحويلك الآن الي صفحه تسجيل الدخول',
                                   );
 
                                   await Future.delayed(Duration(seconds: 2));
@@ -171,7 +171,7 @@ class Registerscreen extends StatelessWidget {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomePage(),
+                                      builder: (context) => Loginscreen(),
                                     ),
                                   );
                                 } on FirebaseAuthException catch (e) {

@@ -30,7 +30,7 @@ class CustomImageHome extends StatelessWidget {
                     Colors.black.withOpacity(0.5),
                     BlendMode.darken,
                   ),
-                  child: Image.network( // استخدام Image.network بدلاً من Image.asset
+                  child: Image.network(
                     item.imageUrl,
                     height: 160,
                     width: 234,

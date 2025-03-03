@@ -16,8 +16,10 @@ class CategorySuccess extends FoodState {
 
 class CategoryLoaded extends FoodState {
   final List<Item> items;
+  final String tableName;
+  final String uniqueId;
 
-  CategoryLoaded(this.items);
+  CategoryLoaded(this.items, this.tableName, {required this.uniqueId});
 }
 
 class CategoryError extends FoodState {
@@ -30,14 +32,10 @@ class updateFavoriteState extends FoodState {
   final bool isFavorite;
   updateFavoriteState(this.isFavorite);
 }
+
 class FoodCountState extends FoodState {
   final int count;
   FoodCountState(this.count);
 }
 
 class CategoryInitial extends FoodState {}
-
-
-
-
-

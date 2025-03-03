@@ -56,9 +56,9 @@ class HomePage extends StatelessWidget {
                 color: Colors.black,
               ),
               unselectedLabelStyle: const TextStyle(
-                fontSize: 10.0,
+                fontSize: 12.0,
                 color: Colors.black,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.bold,
               ),
             ),
           );

@@ -21,7 +21,6 @@ class Item {
   Map<String, dynamic> toJson() {
     return {
       'ingredients': ingredients,
-
       'time': time,
       'name': name,
       'price': price,
@@ -41,5 +40,4 @@ class Item {
       time: json['time'],
     );
   }
-
 }

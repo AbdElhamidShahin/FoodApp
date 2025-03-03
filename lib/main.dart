@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/view_model/commpnas/PushItemCatogry.dart';
-import 'package:food_app/viwes/screens/CatogaryScreen.dart';
-import 'package:food_app/viwes/screens/category_item_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,11 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:food_app/viwes/screens/Account_Screen.dart';
-import 'package:food_app/viwes/screens/Home_Page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'viwes/screens/Home LoginScreen.dart';
-import 'view_model/commpnas/helper/ThemeProvider.dart'; // Import ThemeProvider
+import 'view_model/commpnas/helper/ThemeProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,7 +55,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: Home_loginscreen(),
       routes: {
         '/account': (context) => AccountScreen(),
       },

@@ -58,92 +58,94 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: _pickImage,
-                child: Container(
-                  height: 160,
-                  width: 160,
-                  decoration: BoxDecoration(
-                    color: colorBasic,
-                    borderRadius: BorderRadius.circular(100),
-                    image: _imageFile != null
-                        ? DecorationImage(
-                            image: FileImage(_imageFile!),
-                            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: _pickImage,
+                  child: Container(
+                    height: 160,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      color: colorBasic,
+                      borderRadius: BorderRadius.circular(100),
+                      image: _imageFile != null
+                          ? DecorationImage(
+                              image: FileImage(_imageFile!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
+                    ),
+                    child: _imageFile == null
+                        ? Center(
+                            child: Image(
+                              height: 130,
+                              width: 130,
+                              image: AssetImage(
+                                  'assets/LoginImage/Camira-removebg-preview.png'),
+                            ),
                           )
                         : null,
                   ),
-                  child: _imageFile == null
-                      ? Center(
-                          child: Image(
-                            height: 130,
-                            width: 130,
-                            image: AssetImage(
-                                'assets/LoginImage/Camira-removebg-preview.png'),
-                          ),
-                        )
-                      : null,
                 ),
-              ),
-              SizedBox(height: 28),
-              Customtextfeild(
-                controller: _nameController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'الرجاء إدخال الاسم';
-                  }
-                  return null;
-                },
-                hintText: 'اسم المستخدم',
-              ),
-              Customtextfeild(
-                controller: _emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'الرجاء إدخال الايميل';
-                  }
-                  return null;
-                },
-                hintText: 'الايميل',
-              ),
-              Customtextfeild(
-                controller: _phoneController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'الرجاء إدخال رقم الهاتف';
-                  }
-                  return null;
-                },
-                hintText: 'رقم الهاتف',
-              ),
-              const SizedBox(height: 100),
-              SizedBox(
-                width: double.infinity,
-                height: 55,
-                child: CustomButton(
-                  color: colorB,
-                  color2: colorA,
-                  text: 'حفظ التعديلات',
-                  onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await UserDataManager.saveUserData(
-                        name: _nameController.text,
-                        phone: _phoneController.text,
-                        email: _emailController.text,
-                        imagePath: _imageFile?.path,
-                      );
-                      Navigator.pop(context, true);
+                SizedBox(height: 28),
+                Customtextfeild(
+                  controller: _nameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'الرجاء إدخال الاسم';
                     }
+                    return null;
                   },
+                  hintText: 'اسم المستخدم',
                 ),
-              ),
-            ],
+                Customtextfeild(
+                  controller: _emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'الرجاء إدخال الايميل';
+                    }
+                    return null;
+                  },
+                  hintText: 'الايميل',
+                ),
+                Customtextfeild(
+                  controller: _phoneController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'الرجاء إدخال رقم الهاتف';
+                    }
+                    return null;
+                  },
+                  hintText: 'رقم الهاتف',
+                ),
+                const SizedBox(height: 100),
+                SizedBox(
+                  width: double.infinity,
+                  height: 55,
+                  child: CustomButton(
+                    color: colorB,
+                    color2: colorA,
+                    text: 'حفظ التعديلات',
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await UserDataManager.saveUserData(
+                          name: _nameController.text,
+                          phone: _phoneController.text,
+                          email: _emailController.text,
+                          imagePath: _imageFile?.path,
+                        );
+                        Navigator.pop(context, true);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

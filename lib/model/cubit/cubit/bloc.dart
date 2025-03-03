@@ -179,15 +179,12 @@ class FoodCubit extends Cubit<FoodState> {
     },
   ];
 
-
-
-
-  Future<void> fetchCategoryData(String tableName) async {
+  Future<void> fetchCategoryData(String tableName, {String? uniqueId}) async {
     try {
       emit(CategoryLoadingState());
 
       final response = await Supabase.instance.client
-          .from(tableName)  // تأكد من استخدام `tableName` الصحيح
+          .from(tableName)
           .select('id, name, price, image_url, ingredients, time, number');
 
       if (response.isEmpty) {
@@ -195,17 +192,19 @@ class FoodCubit extends Cubit<FoodState> {
         return;
       }
 
-      final List<Item> items = response.map((item) => Item(
-        id: item['id']?.toString() ?? '0',
-        name: item['name'] ?? 'No Name',
-        price: item['price']?.toString() ?? '0',
-        imageUrl: item['image_url'] ?? '',
-        ingredients: item['ingredients'] ?? 'No Ingredients',
-        time: item['time']?.toString() ?? 'Unknown',
-        number: item['number']?.toString() ?? '0',
-      )).toList();
+      final List<Item> items = response
+          .map((item) => Item(
+                id: item['id']?.toString() ?? '0',
+                name: item['name'] ?? 'No Name',
+                price: item['price']?.toString() ?? '0',
+                imageUrl: item['image_url'] ?? '',
+                ingredients: item['ingredients'] ?? 'No Ingredients',
+                time: item['time']?.toString() ?? 'Unknown',
+                number: item['number']?.toString() ?? '0',
+              ))
+          .toList();
 
-      emit(CategoryLoaded(items));
+      emit(CategoryLoaded(items, tableName, uniqueId: uniqueId ?? 'default'));
     } catch (e) {
       emit(CategoryError(e.toString()));
     }
@@ -242,5 +241,4 @@ class FoodCubit extends Cubit<FoodState> {
       }
     }
   }
-
 }
