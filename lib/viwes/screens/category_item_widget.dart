@@ -94,7 +94,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                                         child: Material(
                                           color: Colors.transparent,
                                           child: Text(
-                                            widget.item.price,
+                                            '${widget.item.price}EGP',
                                             style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,

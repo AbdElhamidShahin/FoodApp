@@ -7,7 +7,6 @@ import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'viwes/screens/Home LoginScreen.dart';
 import 'view_model/commpnas/helper/ThemeProvider.dart';
 
